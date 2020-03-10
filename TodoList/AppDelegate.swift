@@ -11,11 +11,24 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+  
+    func applicationWillResignActive(_ application: UIApplication) {
+        
+    }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        
+        print("Application Did Enter Background")
+    }
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        
+    }
+    func applicationWillTerminate(_ application: UIApplication) {
+        print("Application will teminate")
+    }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // First called when App lanched
+        print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
         return true
     }
 

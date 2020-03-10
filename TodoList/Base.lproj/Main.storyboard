@@ -29,11 +29,18 @@
                             <outlet property="delegate" destination="pbQ-Zo-oxR" id="yJW-2U-zRs"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todoy" id="cvW-Xs-ffr"/>
+                    <navigationItem key="navigationItem" title="Todoy" id="cvW-Xs-ffr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8DI-V2-a2n">
+                            <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="pbQ-Zo-oxR" id="UEV-i6-mAL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="duW-MS-pV8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="220" y="35"/>
+            <point key="canvasLocation" x="-36" y="25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EoR-XH-Bky">
@@ -55,7 +62,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V1E-rb-KBt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-462" y="35"/>
+            <point key="canvasLocation" x="-774" y="25"/>
         </scene>
     </scenes>
 </document>
