@@ -9,26 +9,15 @@
 import UIKit
 
 class TodoListViewController: UITableViewController {
-    // Store data on key value
-    //  it load entire P list
-    var defult = UserDefaults.standard
-     //var itemArray = ["Find Milk","Buy Eggs","Destory  Demogorgon"]
+  
+ //Create Own Plist For Store data
+     let datFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("item.Plist")
      var itemArray = [Item]()
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        if let   item = defult.array(forKey: "TodoListArray") as? [Item] {
-               itemArray = item
-               }
-        var item0 = Item()
-        item0.titel = "Milk"
-        itemArray.append(item0)
-        var item1 = Item()
-        item1.titel = "Egg"
-        itemArray.append(item1)
-        print(itemArray)
-        
-    }
+       loaditem()
+    } 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         itemArray.count
     }
@@ -66,7 +55,13 @@ class TodoListViewController: UITableViewController {
             var item = Item()
             item.titel = textfeild.text!
             self.itemArray.append(item)
-            self.defult.set(self.itemArray, forKey: "TodoListArray")
+            var encode = PropertyListEncoder()
+            do{
+                let data = try encode.encode(self.itemArray)
+                try data.write(to : self.datFilePath!)        }
+        catch {
+            print("Error Encoding")
+        }
             self.tableView.reloadData()
         }
         alert.addAction(action)
@@ -76,5 +71,18 @@ class TodoListViewController: UITableViewController {
         }
         present(alert,animated: true,completion: nil)
     }
+    func loaditem(){
+        if  let data = try? Data(contentsOf: datFilePath!) {
+            let decder = PropertyListDecoder()
+            do{
+            itemArray = try decder.decode([Item].self, from: data)
+            }
+            catch {
+                print(error)
+            }
+        }
+        }
+        
+    
 }
 
