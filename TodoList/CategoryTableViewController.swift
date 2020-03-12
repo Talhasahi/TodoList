@@ -4,13 +4,12 @@
 //
 //  Created by Talha on 11/03/2020.
 //  Copyright © 2020 Talha. All rights reserved.
-//
 
 import UIKit
 import CoreData
 class CategoryTableViewController: UITableViewController {
     var categories = [Categories]()
-    // it just use for find location
+    // it just use for find location whear
    let datFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     //for data base first You need to create cotext
      let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -27,7 +26,6 @@ class CategoryTableViewController: UITableViewController {
                    self.categories.append(item)
                 self.saveData()
                     self.tableView.reloadData()
-        
         }
         alert.addAction(action)
         alert.addTextField { (alertTextField) in
@@ -35,7 +33,6 @@ class CategoryTableViewController: UITableViewController {
             textfeild = alertTextField
             }
             present(alert,animated: true,completion: nil)
-        
     }
     //MARK: - countArray
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
