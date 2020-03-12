@@ -5,21 +5,21 @@
 //  Created by Talha on 09/03/2020.
 //  Copyright © 2020 Talha. All rights reserved.
 //
-
 import UIKit
 import CoreData
 class TodoListViewController: UITableViewController {
-  
- //Create Own Plist For Store data
      let datFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    // item is from croe data class
     @IBOutlet weak var searchBar: UISearchBar!
     var itemArray = [Item]()
        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var  selectedCategory : Categories?{
+        didSet{
+            loaditem()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-       loaditem()
     } 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         itemArray.count
@@ -39,7 +39,6 @@ class TodoListViewController: UITableViewController {
        
         //For deselection immediately
         tableView.deselectRow(at: indexPath, animated: true)
-        
         itemArray[indexPath.row].done =  !itemArray[indexPath.row].done
         //update using saveitem
         //del using saveitem
@@ -54,14 +53,13 @@ class TodoListViewController: UITableViewController {
         var textfeild = UITextField()
         let alert = UIAlertController(title: "Add New Todoy Item", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-         
             var item = Item(context:  self.context  )
             item.title = textfeild.text!
             item.done = false
+            item.parentCategory = self.selectedCategory
             self.itemArray.append(item)
             self.saveItem()
             self.tableView.reloadData()
-            
         }
         alert.addAction(action)
         alert.addTextField { (alertTextField) in
@@ -70,7 +68,17 @@ class TodoListViewController: UITableViewController {
         }
         present(alert,animated: true,completion: nil)
     }
-    func loaditem(with request : NSFetchRequest<Item> = Item.fetchRequest()){
+    //MARK: - LoadFunction
+    func loaditem(with request : NSFetchRequest<Item> = Item.fetchRequest(),predicat  : NSPredicate? = nil){
+    let categorypredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        //add two NSCompoundPredicate means two condition
+        if let addtionalPredicate = predicat {
+            let compoundPreicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categorypredicate,addtionalPredicate])
+             request.predicate = compoundPreicate
+        }
+        else{
+            request.predicate = categorypredicate
+        }
         do{
           itemArray =   try context.fetch(request)
         }
@@ -87,28 +95,24 @@ class TodoListViewController: UITableViewController {
         }
         tableView.reloadData()
     }
-    
-        
-    
 }
 extension TodoListViewController : UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request : NSFetchRequest<Item>  = Item.fetchRequest()
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true )]
         //create comtum request
-        loaditem(with : request)
+        loaditem(with : request,predicat : predicate )
         
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
-            loaditem()
+            //loaditem()
             //
             DispatchQueue.main.async {
                 
                searchBar.resignFirstResponder()
             }
-            
         }
     }
 }

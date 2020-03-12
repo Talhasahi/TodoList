@@ -14,6 +14,7 @@
 		BC3644A0241681E000AB83A7 /* TodoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BC36449E241681E000AB83A7 /* TodoList.xcdatamodeld */; };
 		BC3644A2241681E200AB83A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC3644A1241681E200AB83A7 /* Assets.xcassets */; };
 		BC3644A5241681E200AB83A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3644A3241681E200AB83A7 /* LaunchScreen.storyboard */; };
+		BC3A4FAA241926E0004CD972 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3A4FA9241926E0004CD972 /* CategoryTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		BC3644A1241681E200AB83A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC3644A4241681E200AB83A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC3644A6241681E200AB83A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC3A4FA9241926E0004CD972 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				BC364495241681E000AB83A7 /* AppDelegate.swift */,
 				BC364497241681E000AB83A7 /* SceneDelegate.swift */,
+				BC3A4FA9241926E0004CD972 /* CategoryTableViewController.swift */,
 				BC364499241681E000AB83A7 /* TodoListViewController.swift */,
 				BC36449B241681E000AB83A7 /* Main.storyboard */,
 				BC3644A1241681E200AB83A7 /* Assets.xcassets */,
@@ -144,6 +147,7 @@
 				BC36449A241681E000AB83A7 /* TodoListViewController.swift in Sources */,
 				BC364496241681E000AB83A7 /* AppDelegate.swift in Sources */,
 				BC364498241681E000AB83A7 /* SceneDelegate.swift in Sources */,
+				BC3A4FAA241926E0004CD972 /* CategoryTableViewController.swift in Sources */,
 				BC3644A0241681E000AB83A7 /* TodoList.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
