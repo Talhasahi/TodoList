@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+// Object from RealmSwift
 class Categories : Object {
     @objc dynamic var name : String = ""
     // For creating a Realtion Ship
