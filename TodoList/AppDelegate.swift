@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-
+import RealmSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
         
-        print("Application Did Enter Background")
+       
     }
     func applicationWillEnterForeground(_ application: UIApplication) {
         
@@ -26,9 +26,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
         // First called when App lanched
-        print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
+     
+        
+        do{
+          
+           
+            }
+        
+        catch {
+         print("Error in installing new realm\(error)")
+        }
         return true
     }
 

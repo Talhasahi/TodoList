@@ -4,15 +4,13 @@
 //
 //  Created by Talha on 11/03/2020.
 //  Copyright © 2020 Talha. All rights reserved.
-
 import UIKit
 import CoreData
+import RealmSwift
+//realm store the data in form of Object
 class CategoryTableViewController: UITableViewController {
-    var categories = [Categories]()
-    // it just use for find location whear
-   let datFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    //for data base first You need to create cotext
-     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let realm = try!  Realm()
+    var categories : Results<Categories>?
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
@@ -21,10 +19,9 @@ class CategoryTableViewController: UITableViewController {
                var textfeild = UITextField()
                let alert = UIAlertController(title: "Add New Todoy Category", message: "", preferredStyle: .alert)
                let action = UIAlertAction(title: "Add", style: .default) { (action) in
-                var item = Categories(context: self.context)
-                item.name = textfeild.text!
-                   self.categories.append(item)
-                self.saveData()
+                let newCategory = Categories()
+                newCategory.name = textfeild.text!
+                self.saveData(category: newCategory)
                     self.tableView.reloadData()
         }
         alert.addAction(action)
@@ -33,15 +30,16 @@ class CategoryTableViewController: UITableViewController {
             textfeild = alertTextField
             }
             present(alert,animated: true,completion: nil)
+        tableView.reloadData()
     }
     //MARK: - countArray
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categories.count
+     return   categories?.count ?? 1
     }
     //MARK: - cellForRowAt
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCategoryCell", for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row].name
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No category Added Yet"
         return cell
     }
     //MARK: - didSelectRowAt
@@ -53,28 +51,26 @@ class CategoryTableViewController: UITableViewController {
       
         let destinationVC = segue.destination as! TodoListViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = categories[indexPath.row]
-            print(categories[indexPath.row])
+            destinationVC.selectedCategory = categories?[indexPath.row]
+            
         }
     }
         
-    func saveData(){
+    func saveData(category : Categories){
         do{
-             try context.save()
+            try realm.write(){
+                realm.add(category)
+            }
         }catch {
-            
+          print("Error in Write Dtaa\(error)")
         }
         tableView.reloadData()
     }
     func loadData(){
-           var  request : NSFetchRequest<Categories> = Categories.fetchRequest()
-        do{
-                 categories =   try context.fetch(request)
-               }
-               catch{
-                print(error)
-               }
-               tableView.reloadData()
+        //pull all the Item in the categories table
+        categories = realm.objects(Categories.self)
+        tableView.reloadData()
+               
     }
     
 }
